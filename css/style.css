@@ -584,6 +584,14 @@ main {
   display: flex;
   gap: 16px;
   justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card-load {
+  border-left: 3px solid #27ae60;
+}
+.card-load h3 {
+  color: #27ae60;
 }
 
 /* ===== Error ===== */

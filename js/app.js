@@ -503,6 +503,111 @@ document.getElementById('btn-notion').addEventListener('click', () => {
   });
 });
 
+// ===== Save / Load JSON =====
+document.getElementById('btn-save-json').addEventListener('click', () => {
+  const data = {
+    version: 1,
+    savedAt: new Date().toISOString(),
+    repoName: state.repoName,
+    owner: state.owner,
+    repo: state.repo,
+    branch: state.branch,
+    repoInfo: state.repoInfo,
+    tree: state.tree,
+    languages: state.languages,
+    keyFiles: state.keyFiles,
+    overview: state.overview,
+    designKeys: state.designKeys,
+    improvements: state.improvements,
+    learnings: state.learnings,
+    posterImage: (typeof learningPosterImage !== 'undefined') ? learningPosterImage : null
+  };
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `code-analysis_${state.repoName || 'data'}_${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById('file-load').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      loadSavedData(data);
+    } catch (err) {
+      alert('ファイルの読み込みに失敗しました: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+});
+
+function loadSavedData(data) {
+  // Restore state
+  state.repoName = data.repoName || '';
+  state.owner = data.owner || '';
+  state.repo = data.repo || '';
+  state.branch = data.branch || '';
+  state.repoInfo = data.repoInfo || null;
+  state.tree = data.tree || null;
+  state.languages = data.languages || null;
+  state.keyFiles = data.keyFiles || [];
+  state.overview = data.overview || null;
+  state.designKeys = data.designKeys || null;
+  state.improvements = data.improvements || null;
+  state.learnings = data.learnings || null;
+
+  if (data.posterImage) {
+    learningPosterImage = data.posterImage;
+  }
+
+  // Show progress bar
+  document.getElementById('progress-section').classList.remove('hidden');
+
+  // Render each step that has data, show result and hide input
+  if (state.overview) {
+    renderOverview(state.overview);
+    document.getElementById('step-1-input').classList.add('hidden');
+    document.getElementById('step-1-result').classList.remove('hidden');
+  }
+  if (state.designKeys) {
+    renderDesignKeys(state.designKeys);
+    document.getElementById('step-2-input').classList.add('hidden');
+    document.getElementById('step-2-result').classList.remove('hidden');
+  }
+  if (state.improvements) {
+    renderImprovements(state.improvements);
+    document.getElementById('step-3-input').classList.add('hidden');
+    document.getElementById('step-3-result').classList.remove('hidden');
+  }
+  if (state.learnings) {
+    renderLearnings(state.learnings);
+    document.getElementById('step-4-input').classList.add('hidden');
+    document.getElementById('step-4-result').classList.remove('hidden');
+  }
+
+  // Navigate to the furthest completed step
+  let lastStep = 0;
+  if (state.learnings) lastStep = 4;
+  else if (state.improvements) lastStep = 3;
+  else if (state.designKeys) lastStep = 2;
+  else if (state.overview) lastStep = 1;
+
+  showStep(lastStep);
+
+  // Update progress dots
+  for (let i = 1; i <= lastStep; i++) {
+    const dot = document.querySelector(`.progress-step[data-step="${i}"] .step-dot`);
+    if (dot) dot.classList.add('done');
+  }
+}
+
 // ===== Reset =====
 function resetApp() {
   document.getElementById('error-section').classList.add('hidden');

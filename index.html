@@ -28,6 +28,15 @@
         <p class="input-hint">公開リポジトリのURLを入力してください</p>
       </div>
 
+      <div class="card card-load">
+        <h3>過去の分析を読み込む</h3>
+        <p class="input-hint">以前ダウンロードした分析ファイル（.json）をアップロードして復元できます</p>
+        <div class="input-row">
+          <button id="btn-load" class="btn btn-secondary" onclick="document.getElementById('file-load').click()">ファイルを選択して読み込む</button>
+          <input type="file" id="file-load" accept=".json" class="hidden" />
+        </div>
+      </div>
+
       <!-- Loading -->
       <div id="fetch-loading" class="hidden">
         <div class="spinner"></div>
@@ -271,6 +280,7 @@
       <div class="export-section">
         <h3>エクスポート</h3>
         <div class="export-buttons">
+          <button class="btn btn-export" id="btn-save-json">分析データを保存（JSON）</button>
           <button class="btn btn-export" id="btn-pdf">PDF でダウンロード</button>
           <button class="btn btn-export" id="btn-notion">Notion に保存（プロンプト生成）</button>
         </div>
