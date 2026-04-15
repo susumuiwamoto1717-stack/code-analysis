@@ -1,0 +1,212 @@
+[
+  {
+    "repo": "snrsanthi-bit/tree-volume-calculator",
+    "title": "TreeCalculation",
+    "author": "snrsanthi-bit",
+    "languages": ["Ruby", "HTML", "JavaScript", "CSS"],
+    "framework": "Ruby on Rails 7.0",
+    "architecture": "Single Controller MVC",
+    "scale": "小規模",
+    "file_count": 82,
+    "description": "林業向けの樹木体積・面積計算ツール。胸高直径と樹高から材積を算出し、三角形の辺の長さからヘロンの公式で面積を計算する機能を持つ。",
+    "design_keys": [
+      "Turbo Streamによる部分更新（面積計算結果の非同期表示）",
+      "クライアントサイドJS計算とサーバーサイド計算の併用",
+      "データベース不使用のステートレス計算アプリ"
+    ],
+    "bud_bottlenecks": 1,
+    "bud_unnecessary": 2,
+    "bud_duplicated": 1,
+    "learnings": [
+      "Turbo Streamを使った部分的なDOM更新パターン",
+      "ヘロンの公式による三角形面積計算のアルゴリズム実装",
+      "CDN経由のTailwind CSS利用（本番環境では非推奨パターン）"
+    ],
+    "security_concerns": [
+      "CDN経由でTailwind CSSを読み込んでおり本番環境では不適切",
+      "CSRF保護が適切に設定されているか不明（fetch APIでのリクエスト）",
+      "入力値のサーバーサイドバリデーションが不十分（負の値や0の処理）"
+    ],
+    "complexity_score": 1
+  },
+  {
+    "repo": "git-kaz/istanding",
+    "title": "iStanding",
+    "author": "git-kaz",
+    "languages": ["HTML", "Ruby", "JavaScript", "Dockerfile", "Shell", "CSS"],
+    "framework": "Ruby on Rails 8.1 + Hotwire",
+    "architecture": "MVC + Solid Queue + Web Push",
+    "scale": "中規模",
+    "file_count": 214,
+    "description": "座りすぎ防止のための姿勢・運動管理アプリ。座位時間をタイマーで計測し、一定時間経過でWeb Push通知を送信、ストレッチ運動を提案する。",
+    "design_keys": [
+      "Solid Queue/Solid Cache/Solid Cableによるインフラ統合（Rails 8方式）",
+      "Web Push通知によるリアルタイムアラート機能",
+      "Chartkick + Groupdateによる座位時間・運動回数の可視化"
+    ],
+    "bud_bottlenecks": 1,
+    "bud_unnecessary": 1,
+    "bud_duplicated": 1,
+    "learnings": [
+      "Rails 8のSolid Queue/Cache/Cableの統合アーキテクチャ",
+      "Web Push APIによるブラウザプッシュ通知の実装",
+      "Devise + OmniAuth（Google OAuth2）による認証基盤"
+    ],
+    "security_concerns": [
+      "ゲストユーザーのパスワードがSecureRandom生成だが、emailが固定値（guest@example.com）",
+      "Web Push認証キー（p256dh, auth）がユーザーテーブルに直接保存されている",
+      "subscribeアクションでStrong Parametersが十分に適用されていない"
+    ],
+    "complexity_score": 3
+  },
+  {
+    "repo": "tsukakoshi777/motivation-streaming-app",
+    "title": "推しスタ⭐",
+    "author": "tsukakoshi777",
+    "languages": ["Ruby", "HTML", "JavaScript", "SCSS", "Dockerfile", "Shell"],
+    "framework": "Ruby on Rails 7.0 + Bootstrap",
+    "architecture": "MVC + Survey/Goal Domain Model + Decorator Pattern",
+    "scale": "中規模",
+    "file_count": 156,
+    "description": "配信者のモチベーション維持を支援するアプリ。アンケート形式で配信活動を診断し、成長目標（Goal）と日々の輝き（Spark）を記録して自己成長を可視化する。",
+    "design_keys": [
+      "Draperによるデコレーターパターンの活用",
+      "Survey→SurveyProfile→SurveyResponse→SurveyResult→Goalという多段階ドメインモデル",
+      "Sorceryによるカスタム認証 + CarrierWave + AWS S3による画像管理"
+    ],
+    "bud_bottlenecks": 2,
+    "bud_unnecessary": 1,
+    "bud_duplicated": 1,
+    "learnings": [
+      "複雑なドメインモデル設計（Survey系の多テーブル構成）",
+      "Draperデコレーターによるビューロジック分離",
+      "Turbo Streamによるインライン編集（Sparksの作成・編集・削除）"
+    ],
+    "security_concerns": [
+      "dotenv-railsがproductionグループにも含まれている（本番で.envファイル依存）",
+      "CarrierWaveのアップロード設定でファイルサイズ制限が見当たらない",
+      "SurveyProfileのネストルーティングでの認可チェックが不明"
+    ],
+    "complexity_score": 3
+  },
+  {
+    "repo": "blizzard115/graduation-project",
+    "title": "Stylog",
+    "author": "blizzard115",
+    "languages": ["Ruby", "HTML", "SCSS", "JavaScript", "Dockerfile", "Shell"],
+    "framework": "Ruby on Rails 7.1 + Bootstrap",
+    "architecture": "MVC + SNS Pattern (Follow/Like/Comment/Tag)",
+    "scale": "中規模",
+    "file_count": 204,
+    "description": "ファッション共有SNSアプリ。ユーザーがコーディネート写真を投稿し、いいね・コメント・フォロー・タグ機能でファッションコミュニティを形成する。",
+    "design_keys": [
+      "UUIDベースのURL設計（Postモデルのuuidカラムとto_paramオーバーライド）",
+      "Active Storageによる画像管理 + Masonry/Show用バリアント",
+      "自己参照型Relationshipモデルによるフォロー/フォロワー機能"
+    ],
+    "bud_bottlenecks": 1,
+    "bud_unnecessary": 2,
+    "bud_duplicated": 2,
+    "learnings": [
+      "自己参照型多対多（Relationship）によるフォロー機能の設計",
+      "Active Storageのvariant機能を使った画像リサイズ",
+      "Devise + OmniAuth Google OAuth2 + Serviceオブジェクトパターン"
+    ],
+    "security_concerns": [
+      "routes.rbでresources :usersが2回定義されている（重複ルーティング）",
+      "PostモデルのUUID生成はSecureRandom.uuidだが、DB上のunique制約は適切に設定済み",
+      "locale設定のバックアップファイル（.bak）がリポジトリに含まれている"
+    ],
+    "complexity_score": 3
+  },
+  {
+    "repo": "saku-56/OKAN",
+    "title": "Okan",
+    "author": "saku-56",
+    "languages": ["Ruby", "HTML", "JavaScript", "CSS", "Dockerfile", "Shell"],
+    "framework": "Ruby on Rails 7.2 + Tailwind CSS 4 + Hotwire",
+    "architecture": "MVC + Form Object + Service Object + LINE Bot Integration",
+    "scale": "中規模",
+    "file_count": 276,
+    "description": "薬の在庫管理・通院スケジュール管理アプリ。処方薬の在庫を自動計算し、在庫切れ前にLINE通知を送信。通院予定日のリマインダー機能も備える。",
+    "design_keys": [
+      "Form Objectパターン（UserMedicineForm）による複雑なフォームバリデーション",
+      "Service Objectパターン（MedicineNotificationService, ConsultationNotificationService）",
+      "LINE Bot API v2によるプッシュ通知 + wheneverによるcron連携"
+    ],
+    "bud_bottlenecks": 1,
+    "bud_unnecessary": 1,
+    "bud_duplicated": 1,
+    "learnings": [
+      "Form ObjectとService Objectによるファットモデル/コントローラーの回避",
+      "LINE Bot API v2を使ったプッシュメッセージ通知の実装",
+      "GitHub Actions + wheneverによる定期タスク実行（在庫消費・通知）"
+    ],
+    "security_concerns": [
+      "LINE Bot APIのエラーハンドリングでrescue => eが広すぎる（例外を握りつぶしている）",
+      "credentials/がenvironment別に分離されているのは良い設計",
+      "OmniAuthでLINEログイン時にemail未取得の場合にダミーメールを生成している"
+    ],
+    "complexity_score": 4
+  },
+  {
+    "repo": "chuto-pika/Epistory",
+    "title": "Epistory",
+    "author": "chuto-pika",
+    "languages": ["Ruby", "HTML", "Python", "JavaScript", "CSS", "Shell", "Dockerfile"],
+    "framework": "Ruby on Rails 7.0 + Tailwind CSS + OpenAI API",
+    "architecture": "MVC + Multi-Step Wizard + AI Message Generation + Session-based Draft",
+    "scale": "中規模",
+    "file_count": 1901,
+    "description": "感謝メッセージ生成アプリ。6ステップのウィザード形式で相手・場面・気持ちなどを入力し、OpenAI APIでパーソナライズされた感謝メッセージを自動生成する。",
+    "design_keys": [
+      "6ステップウィザードパターン（session-based draft管理）",
+      "OpenAI APIによるメッセージ生成 + パート別再生成 + AIブラッシュアップ",
+      "ログイン不要でも1通作成可能なセッションベース認可"
+    ],
+    "bud_bottlenecks": 1,
+    "bud_unnecessary": 2,
+    "bud_duplicated": 1,
+    "learnings": [
+      "マルチステップウィザードのsession管理とConcernによるモジュール化",
+      "OpenAI API連携（ruby-openai gem）によるAIテキスト生成",
+      "日次制限付きAI機能（ai_refine_daily_used + usage_date）の設計"
+    ],
+    "security_concerns": [
+      "セッションベースのメッセージ所有権チェック（session[:created_message_id]）は改ざんリスクあり",
+      "OpenAI APIキーの管理方法（credentials経由か環境変数か）を確認すべき",
+      "ファイル数が1901と多く、不要ファイル（テスト生成物やビルドキャッシュ）が含まれている可能性"
+    ],
+    "complexity_score": 4
+  },
+  {
+    "repo": "common-member/NighTrip",
+    "title": "サクノミ（NighTrip）",
+    "author": "common-member",
+    "languages": ["HTML", "Ruby", "JavaScript", "Dockerfile", "Shell", "CSS"],
+    "framework": "Ruby on Rails 7.2 + Tailwind CSS + Ransack + Geocoder",
+    "architecture": "MVC + Search/Ranking + Diagnosis Feature + Google Maps Integration",
+    "scale": "中規模",
+    "file_count": 292,
+    "description": "夜景スポット共有・検索アプリ。ユーザーが夜景スポットを投稿し、地域・雰囲気・タグで検索・診断できる。ブックマークランキングやGoogle Maps連携機能を備える。",
+    "design_keys": [
+      "Ransackによる多条件検索 + Geocoderによる住所→緯度経度変換",
+      "診断機能（Diagnosis）による条件マッチングとレコメンデーション",
+      "ブックマーク数ベースのランキング機能（スポット・ユーザー両方）"
+    ],
+    "bud_bottlenecks": 2,
+    "bud_unnecessary": 2,
+    "bud_duplicated": 2,
+    "learnings": [
+      "Ransack gemによる柔軟な検索フォーム実装",
+      "Geocoder gemによる住所のジオコーディングとGoogle Maps連携",
+      "Claude Code連携のプロジェクト設定（.claude/ディレクトリにスキル・ルール・エージェント定義）"
+    ],
+    "security_concerns": [
+      "autocompleteアクションでSQLインジェクション対策が不十分（ILIKE + 直接パラメータ埋め込み）",
+      "Spotモデルのransackable_attributesが比較的広く公開されている",
+      "coverageディレクトリ（テストカバレッジ結果）がリポジトリにコミットされている"
+    ],
+    "complexity_score": 3
+  }
+]

@@ -1,0 +1,208 @@
+{
+  "collected_at": "2026-03-13",
+  "source": "RUNTEQ ソーシャルポートフォリオ",
+  "total_apps": 22,
+  "apps": [
+    {
+      "title": "声友",
+      "author": "たか",
+      "period": "65期",
+      "github_repo": "https://github.com/taka-thor/myapp",
+      "techs": "nginx, AWS EC2/S3, ActionCable, WebRTC, Rails7.2系",
+      "description": "グループ通話アプリ。シニア世代向け、匿名設計、最大4人のグループ通話"
+    },
+    {
+      "title": "okita!! | 起床支援サービス",
+      "author": "ニール",
+      "period": "71期",
+      "github_repo": "https://github.com/tenet64/okita_project",
+      "techs": "Docker, Neon, Rails 7.2.3, Ruby 3.2.3, PostgreSQL, Tailwind CSS, Stimulus, Render",
+      "description": "ユーザー同士が一緒に起床することで二度寝を防ぐアプリ"
+    },
+    {
+      "title": "めくり | 日めくりカレンダーサービス",
+      "author": "わた",
+      "period": "73期",
+      "github_repo": "https://github.com/wata-tsugarian/mekuri",
+      "techs": "",
+      "description": "目標の日までを「紙を破る」アクションでカウントダウンする日めくりカレンダー"
+    },
+    {
+      "title": "MabaTalk",
+      "author": "まさじん",
+      "period": "73期",
+      "github_repo": "https://github.com/naganobol6212/mabatalk",
+      "techs": "Hotwire（Stimulus + Turbo）, PostgreSQL, Ruby, Ruby on Rails, Tailwind CSS",
+      "description": "まばたきによるYes/Noで意思表示を行うコミュニケーション支援Webアプリ"
+    },
+    {
+      "title": "ライフゲージ",
+      "author": "のり",
+      "period": "70期",
+      "github_repo": "https://github.com/noriki06/my_graduate_project",
+      "techs": "AWS, Docker, Messaging API, Ruby on Rails, devise・Omniauth",
+      "description": "人生の残り時間を可視化するアプリ。AI行動提案やLINE通知付き"
+    },
+    {
+      "title": "サクノミ",
+      "author": "ひさじゅ",
+      "period": "6期",
+      "github_repo": null,
+      "github_profile": "https://github.com/hisaju",
+      "techs": "GoogleMapAPI, Heroku, Ruby, Ruby on Rails",
+      "description": "サークル型の飲み会サービス。予定調整・参加管理・会計サポート",
+      "note": "リポジトリURLが個人プロフィールのみ"
+    },
+    {
+      "title": "Icot-Studio",
+      "author": "なとり",
+      "period": "68期",
+      "github_repo": "https://github.com/N10RSto/Icot-Studio",
+      "techs": "HTML, JavaScript, rails7",
+      "description": "ドットアイコン作成アプリ。画像をドット絵に変換する機能付き"
+    },
+    {
+      "title": "Code Analysis - コード分析ツール",
+      "author": "PAPA",
+      "period": "78期",
+      "github_repo": "https://github.com/susumuiwamoto1717-stack/code-analysis",
+      "techs": "Express, JavaScript, HTML, CSS",
+      "description": "GitHubリポジトリをAIで分析し、設計の鍵・改善点・学びを抽出するツール"
+    },
+    {
+      "title": "みんなの紅茶図鑑",
+      "author": "カロク",
+      "period": "70期",
+      "github_repo": "https://github.com/mokuza1/tea_review_app",
+      "techs": "",
+      "description": "紅茶の商品情報をブランド横断で検索できるデータベースアプリ"
+    },
+    {
+      "title": "Code Typing Practice",
+      "author": "PAPA",
+      "period": "78期",
+      "github_repo": "https://github.com/susumuiwamoto1717-stack/vibe-22-typing-game",
+      "techs": "HTML, CSS, JavaScript",
+      "description": "コーディング用記号のタイピング練習アプリ"
+    },
+    {
+      "title": "TreeCalculation",
+      "author": "そのら",
+      "period": "75期",
+      "github_repo": "https://github.com/snrsanthi-bit/tree-volume-calculator",
+      "techs": "",
+      "description": "林業用の材積と地積を求める計算ツール"
+    },
+    {
+      "title": "iStanding",
+      "author": "かーぼ",
+      "period": "74期",
+      "github_repo": "https://github.com/git-kaz/istanding",
+      "techs": "Hotwire（Stimulus + Turbo）, Neon, Render, Ruby on Rails, Solid_Queue",
+      "description": "座りすぎ防止タイマー＆理学療法士監修の運動提案アプリ"
+    },
+    {
+      "title": "推しスタ⭐",
+      "author": "ハンバーガーくん",
+      "period": "71期",
+      "github_repo": "https://github.com/tsukakoshi777/motivation-streaming-app",
+      "techs": "AWS, HTML, JavaScript, Ruby, Ruby on Rails",
+      "description": "配信者向け、AIが配信者特化の分析で最適な目標と行動プランを提案"
+    },
+    {
+      "title": "Stylog",
+      "author": "Hyoga",
+      "period": "69期",
+      "github_repo": "https://github.com/blizzard115/graduation-project",
+      "techs": "Docker, HTML, PostgreSQL, Ruby, Ruby on Rails",
+      "description": "写真1枚＋ひとことで気軽にコーディネートを投稿・共有するファッションSNS"
+    },
+    {
+      "title": "Okan",
+      "author": "さくちんゆー",
+      "period": "69期",
+      "github_repo": "https://github.com/saku-56/OKAN",
+      "techs": "Daisy UI, Docker, Hotwire（Stimulus + Turbo）, Ruby on Rails, Tailwind CSS",
+      "description": "薬の在庫をカレンダーで確認できるアプリ。自動計算で服薬記録不要"
+    },
+    {
+      "title": "Epistory(エピストリー)",
+      "author": "pika",
+      "period": "70期",
+      "github_repo": "https://github.com/chuto-pika/Epistory",
+      "techs": "Docker, Hotwire（Stimulus + Turbo）, Neon, Ruby on Rails, devise・Omniauth",
+      "description": "質問に答えるだけで大切な人への感謝メッセージが完成するサービス"
+    },
+    {
+      "title": "論理検証ラボ Phase2",
+      "author": "Rio",
+      "period": "73期",
+      "github_repo": "https://github.com/Rio-cyber-gif/DevReviewStudy20v2",
+      "techs": "React",
+      "description": "ソフトウェア設計の原則に基づいた構成修正スキルを養う学習ツール"
+    },
+    {
+      "title": "論理検証ラボ",
+      "author": "Rio",
+      "period": "73期",
+      "github_repo": "https://github.com/Rio-cyber-gif/DevReviewStudy20",
+      "techs": "React",
+      "description": "ソフトウェア設計の原則に基づいた構成修正スキルを養う学習ツール"
+    },
+    {
+      "title": "Space Logger - 学習記録アプリ",
+      "author": "まさじん",
+      "period": "73期",
+      "github_repo": "https://github.com/naganobol6212/space_logger",
+      "techs": "React, TypeScript, Vercel, supabase",
+      "description": "学習ログ×GitHubの草×振り返り習慣を掛け合わせた学習記録アプリ"
+    },
+    {
+      "title": "Color Extractor",
+      "author": "Rio",
+      "period": "73期",
+      "github_repo": "https://github.com/Rio-cyber-gif/color-palette-app",
+      "techs": "HTML, JavaScript",
+      "description": "画像から主要な5色を抽出するカラー解析ツール"
+    },
+    {
+      "title": "素人 Code",
+      "author": "ひさじゅ",
+      "period": "6期",
+      "github_repo": "https://github.com/hisaju/silaute",
+      "techs": "Go",
+      "description": "Claude Code パロディ版の対話型CLIツール"
+    },
+    {
+      "title": "NighTrip",
+      "author": "hisa",
+      "period": "不明",
+      "github_repo": "https://github.com/common-member/NighTrip",
+      "techs": "Daisy UI, Docker, Hotwire, Render, Ruby on Rails",
+      "description": "3STEPで簡単にオススメの夜景スポットが診断できるアプリ"
+    }
+  ],
+  "github_repos_summary": [
+    "https://github.com/taka-thor/myapp",
+    "https://github.com/tenet64/okita_project",
+    "https://github.com/wata-tsugarian/mekuri",
+    "https://github.com/naganobol6212/mabatalk",
+    "https://github.com/noriki06/my_graduate_project",
+    "https://github.com/N10RSto/Icot-Studio",
+    "https://github.com/susumuiwamoto1717-stack/code-analysis",
+    "https://github.com/mokuza1/tea_review_app",
+    "https://github.com/susumuiwamoto1717-stack/vibe-22-typing-game",
+    "https://github.com/snrsanthi-bit/tree-volume-calculator",
+    "https://github.com/git-kaz/istanding",
+    "https://github.com/tsukakoshi777/motivation-streaming-app",
+    "https://github.com/blizzard115/graduation-project",
+    "https://github.com/saku-56/OKAN",
+    "https://github.com/chuto-pika/Epistory",
+    "https://github.com/Rio-cyber-gif/DevReviewStudy20v2",
+    "https://github.com/Rio-cyber-gif/DevReviewStudy20",
+    "https://github.com/naganobol6212/space_logger",
+    "https://github.com/Rio-cyber-gif/color-palette-app",
+    "https://github.com/hisaju/silaute",
+    "https://github.com/common-member/NighTrip"
+  ]
+}

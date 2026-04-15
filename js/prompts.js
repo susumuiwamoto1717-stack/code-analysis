@@ -8,14 +8,14 @@ const Prompts = {
 
 ## リポジトリ情報
 - 名前: ${repoName}
-- 説明: ${description || 'なし'}
+- 説明: ${description || "なし"}
 - 言語: ${JSON.stringify(languages)}
 
 ## ファイル構成
 ${fileTree}
 
 ## 主要ファイルの内容
-${keyFiles.map(f => `### ${f.path}\n\`\`\`\n${f.content.slice(0, 3000)}\n\`\`\``).join('\n\n')}
+${keyFiles.map((f) => `### ${f.path}\n\`\`\`\n${f.content.slice(0, 3000)}\n\`\`\``).join("\n\n")}
 
 以下のJSON形式「だけ」で回答してください（説明文は不要、JSONのみ出力）:
 {
@@ -47,7 +47,7 @@ ${keyFiles.map(f => `### ${f.path}\n\`\`\`\n${f.content.slice(0, 3000)}\n\`\`\``
 ## 概要: ${overviewDescription}
 
 ## 主要ファイルの内容
-${keyFiles.map(f => `### ${f.path}\n\`\`\`\n${f.content.slice(0, 4000)}\n\`\`\``).join('\n\n')}
+${keyFiles.map((f) => `### ${f.path}\n\`\`\`\n${f.content.slice(0, 4000)}\n\`\`\``).join("\n\n")}
 
 以下のJSON形式「だけ」で回答してください（説明文は不要、JSONのみ出力）:
 {
@@ -76,7 +76,7 @@ ${keyFiles.map(f => `### ${f.path}\n\`\`\`\n${f.content.slice(0, 4000)}\n\`\`\``
 ## 概要: ${overviewDescription}
 
 ## 主要ファイルの内容
-${keyFiles.map(f => `### ${f.path}\n\`\`\`\n${f.content.slice(0, 4000)}\n\`\`\``).join('\n\n')}
+${keyFiles.map((f) => `### ${f.path}\n\`\`\`\n${f.content.slice(0, 4000)}\n\`\`\``).join("\n\n")}
 
 以下のJSON形式「だけ」で回答してください（説明文は不要、JSONのみ出力）:
 {
@@ -149,5 +149,126 @@ ${budJson}
   ],
   "summary": "この3つを学ぶことで得られる全体的な力（2文で）"
 }`;
-  }
+  },
+
+  // Step 6: Reverse Engineering - Live Coding Plan
+  reversePlan(repoName, overviewDescription, designKeysJson, learningsJson) {
+    return `あなたはプログラミング教育の専門家であり、ライブコーディング講師です。
+以下のアプリの分析結果をもとに、「このアプリをゼロから自分で作れるようになるためのライブコーディング計画」を逆算して作成してください。
+
+## 対象アプリ: ${repoName}
+## 概要: ${overviewDescription}
+
+## このアプリの設計の鍵
+${designKeysJson}
+
+## このアプリから得られる学び
+${learningsJson}
+
+## 方針
+- 完成品から逆算して、「何を・どの順番で・どう作れば」このアプリの設計を体得できるかを考える
+- 各ステップは1回のライブコーディングセッション（30〜60分）で完結する粒度にする
+- 最初のステップは最もシンプルな骨格から始め、段階的に機能と設計を積み上げる
+- 各ステップで「なぜそう作るのか（設計意図）」を明確にする
+- 最終ステップ完了時に、元のアプリの核心部分が再現できている状態を目指す
+
+以下のJSON形式「だけ」で回答してください（説明文は不要、JSONのみ出力）:
+{
+  "total_sessions": 数値,
+  "goal": "この計画を完了すると何ができるようになるか（1文）",
+  "prerequisite": "前提として必要な知識・環境",
+  "sessions": [
+    {
+      "number": 1,
+      "title": "セッションタイトル（例：状態オブジェクトで画面遷移を作る）",
+      "duration_min": 30,
+      "objective": "このセッションのゴール（何が動く状態になるか）",
+      "design_intent": "なぜこの順番で作るのか（設計上の狙い）",
+      "steps": [
+        "具体的な作業ステップ1",
+        "具体的な作業ステップ2"
+      ],
+      "key_concepts": ["このセッションで体得する概念1", "概念2"],
+      "checkpoint": "完了時の確認方法（例：ブラウザで○○が表示される）"
+    }
+  ],
+  "extension_ideas": [
+    {
+      "title": "発展課題のタイトル",
+      "description": "余力がある場合に挑戦できる追加機能や改善"
+    }
+  ],
+  "summary": "この計画全体を通じて身につく設計力（2文で）"
+}`;
+  },
+
+  // Step 7: Vibe Coding Playbook
+  vibeCoding(
+    repoName,
+    overviewDescription,
+    designKeysJson,
+    learningsJson,
+    reversePlanJson,
+  ) {
+    return `あなたはバイブコーディング（AIと対話しながらアプリを作る手法）の専門家です。
+以下のアプリの分析結果をもとに、「このアプリをClaudeなどのAIに指示して作ってもらうための具体的なプロンプト集」をステップバイステップで作成してください。
+
+## 対象アプリ: ${repoName}
+## 概要: ${overviewDescription}
+
+## このアプリの設計の鍵
+${designKeysJson}
+
+## このアプリから得られる学び
+${learningsJson}
+
+## 逆算ライブコーディング計画（参考）
+${reversePlanJson}
+
+## 方針
+- 各ステップは「AIに投げる1回のプロンプト」= 1つの依頼単位
+- 各ステップに以下を必ず含める：
+  a) AIに投げる具体的なプロンプト文（そのままコピペで使えるレベル）
+  b) AIの回答が返ってきた後の検証方法（何を確認すればOKか）
+  c) コードを読むべきか判定（"must_read" / "skim" / "skip"）と、その理由
+- "must_read": そのステップの出力コードを理解しないと次に進めない箇所
+- "skim": ざっと目を通せばOK（動作確認できれば深く理解しなくてよい）
+- "skip": AIに任せて結果だけ確認すればよい
+- 最初は最小構成から始め、段階的に機能を積み上げる
+- 各ステップ間の依存関係を明確にする
+- 失敗しやすいポイントには「つまずきポイント」として注意書きを付ける
+
+以下のJSON形式「だけ」で回答してください（説明文は不要、JSONのみ出力）:
+{
+  "total_steps": 数値,
+  "app_summary": "このアプリを一言で（AIへの最初の説明用）",
+  "tech_stack": "使用技術スタック",
+  "steps": [
+    {
+      "number": 1,
+      "title": "ステップタイトル（例：プロジェクト骨格の生成）",
+      "prompt": "AIに投げる具体的なプロンプト文（そのままコピペで使えるレベルで書く）",
+      "expected_output": "このプロンプトでAIが生成するもの（ファイル名・機能の説明）",
+      "verification": {
+        "method": "検証方法（例：ブラウザで localhost:3000 を開いて○○が表示されることを確認）",
+        "success_criteria": "OKの基準（何が見えたら/動いたら成功か）"
+      },
+      "code_reading": {
+        "level": "must_read / skim / skip",
+        "reason": "なぜそのレベルか",
+        "focus_points": ["読む場合、特に注目すべき箇所"]
+      },
+      "pitfall": "つまずきやすいポイント（あれば。なければ null）",
+      "depends_on": [依存する前ステップの番号リスト]
+    }
+  ],
+  "tips": [
+    {
+      "title": "バイブコーディングのコツ",
+      "description": "このアプリを作る上での全般的なアドバイス"
+    }
+  ],
+  "summary": "このPlaybookを通じて得られるバイブコーディングスキル（2文で）"
+}`;
+  },
 };

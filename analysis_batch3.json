@@ -1,0 +1,203 @@
+[
+  {
+    "repo": "susumuiwamoto1717-stack/code-analysis",
+    "title": "Code Analysis",
+    "author": "susumuiwamoto1717-stack",
+    "languages": ["JavaScript", "CSS", "HTML"],
+    "framework": "Express",
+    "architecture": "MVC-like (Server + Client-side modules)",
+    "scale": "小規模",
+    "file_count": 12,
+    "description": "GitHubリポジトリのコードを自動分析し、設計の鍵・BUD分析・学び3選をステップバイステップで生成するWebツール。GitHub APIでリポジトリ情報を取得し、Claude APIプロンプトを生成してコード分析レポートをPDF/Markdownで出力する。",
+    "design_keys": [
+      "プロンプトエンジニアリングによるAI分析パイプライン（4段階分析: 概要→設計の鍵→BUD→学び）",
+      "GitHub API統合によるリポジトリ自動解析（ファイルツリー取得・重要ファイル自動選定）",
+      "モジュール分離パターン（github.js/prompts.js/exporter.js/image-prompts.jsの責務分離）"
+    ],
+    "bud_bottlenecks": 2,
+    "bud_unnecessary": 1,
+    "bud_duplicated": 1,
+    "learnings": [
+      "プロンプトエンジニアリング（構造化プロンプトによるJSON出力制御）",
+      "GitHub REST API活用（認証なしでのリポジトリ解析パイプライン構築）",
+      "関心の分離（フロントエンドモジュール分割パターン）"
+    ],
+    "security_concerns": [
+      "Anthropic APIキーがクライアントサイドで使用される設計リスク（現在はサーバーにdotenv依存あるが、フロントエンドJSからの直接API呼び出しの可能性）",
+      "GitHub APIのレート制限対策が不十分（認証なしで60リクエスト/時間制限）"
+    ],
+    "complexity_score": 3
+  },
+  {
+    "repo": "susumuiwamoto1717-stack/vibe-22-typing-game",
+    "title": "Code Typing Practice",
+    "author": "susumuiwamoto1717-stack",
+    "languages": ["JavaScript", "CSS", "HTML"],
+    "framework": "なし（Vanilla JS）",
+    "architecture": "IIFE + グローバルモジュールパターン",
+    "scale": "中規模",
+    "file_count": 14,
+    "description": "プログラミング記号・HTML/CSS・JavaScript・Ruby等のコードスニペットをタイピング練習できるWebアプリ。仮想キーボード表示・指ガイド・WPM計測・ダッシュボード（カレンダー式進捗管理）・Ruby/Git学習モードを搭載している。",
+    "design_keys": [
+      "状態管理パターン（stateオブジェクトに全アプリ状態を集約し画面遷移を制御）",
+      "イベント駆動アーキテクチャ（keydownイベントによるリアルタイムタイピング判定）",
+      "データ駆動設計（SNIPPETSオブジェクトでモード別タイピング問題を構造化管理）"
+    ],
+    "bud_bottlenecks": 2,
+    "bud_unnecessary": 2,
+    "bud_duplicated": 1,
+    "learnings": [
+      "状態管理パターン（中央集権的stateオブジェクトによる画面遷移制御）",
+      "イベント駆動プログラミング（keydownハンドラによるリアルタイム入力処理）",
+      "関心の分離（データ/ロジック/UI/表示の4層分離）"
+    ],
+    "security_concerns": [
+      "localStorageにユーザーキーを平文保存（セッション管理として脆弱）",
+      "ユーザー入力のサニタイズ不足（ユーザーキーがそのまま使用される）"
+    ],
+    "complexity_score": 3
+  },
+  {
+    "repo": "Rio-cyber-gif/DevReviewStudy20v2",
+    "title": "論理検証ラボ Phase2",
+    "author": "Rio-cyber-gif",
+    "languages": ["JavaScript", "CSS", "HTML"],
+    "framework": "React 19 + Vite + Tailwind CSS 4",
+    "architecture": "コンポーネントベース（React SPA）",
+    "scale": "中規模",
+    "file_count": 25,
+    "description": "React/JSXのコードレビューを実践的に学べるミッション形式の学習アプリ。20個のミッション（スプレッド構文、オプショナルチェーン、useRef、try-catch等）を通じてコード品質改善スキルを身につける。",
+    "design_keys": [
+      "ミッション駆動型学習設計（missionsデータ配列にcode/correctCode/keywords/explanationを構造化）",
+      "キーワードベース正解判定（keywords/removeKeywordsによる柔軟なコード検証ロジック）",
+      "React状態管理（useState/useEffectによる進捗・スコア・UI状態の一元管理 + localStorage永続化）"
+    ],
+    "bud_bottlenecks": 1,
+    "bud_unnecessary": 1,
+    "bud_duplicated": 2,
+    "learnings": [
+      "React Hooksによる状態管理（useState/useEffect/localStorageの連携パターン）",
+      "コードエディタ統合（react-simple-code-editor + PrismJSシンタックスハイライト）",
+      "ミッションデータの構造化設計（検証ロジックとデータの分離）"
+    ],
+    "security_concerns": [
+      "dangerouslySetInnerHTMLの使用（PrismJSハイライト出力に使用、入力がPrismJS経由のため低リスク）",
+      "localStorageに進捗データを平文保存（改ざん可能）"
+    ],
+    "complexity_score": 3
+  },
+  {
+    "repo": "Rio-cyber-gif/DevReviewStudy20",
+    "title": "論理検証ラボ",
+    "author": "Rio-cyber-gif",
+    "languages": ["JavaScript", "CSS", "HTML"],
+    "framework": "React 19 + Vite + Tailwind CSS 4",
+    "architecture": "コンポーネントベース（React SPA）",
+    "scale": "中規模",
+    "file_count": 25,
+    "description": "Ruby/Railsのコードレビューを実践的に学べるミッション形式の学習アプリ。Phase2と同じアーキテクチャだが、対象言語がRubyで、ぼっち演算子・破壊的メソッド排除・インスタンス変数汚染防止等のRuby固有パターンを学習する。",
+    "design_keys": [
+      "ミッション駆動型学習設計（Ruby特有のコードパターンをcorrectCode/keywordsで構造化）",
+      "Phase2との共通アーキテクチャ（同一コンポーネント構成・同一検証ロジック）",
+      "React状態管理 + localStorage永続化パターン"
+    ],
+    "bud_bottlenecks": 1,
+    "bud_unnecessary": 1,
+    "bud_duplicated": 3,
+    "learnings": [
+      "Ruby固有の安全なコーディングパターン（ぼっち演算子、非破壊的メソッド、スコープ管理）",
+      "再利用可能なアーキテクチャ設計（言語を変えても同一フレームワークで動作する設計）",
+      "React Hooksによる状態管理"
+    ],
+    "security_concerns": [
+      "dangerouslySetInnerHTMLの使用（PrismJS経由のため低リスク）",
+      "localStorageに進捗データを平文保存"
+    ],
+    "complexity_score": 3
+  },
+  {
+    "repo": "naganobol6212/space_logger",
+    "title": "Space Logger",
+    "author": "naganobol6212",
+    "languages": ["TypeScript", "HTML", "SQL"],
+    "framework": "React 19 + Vite + Supabase + React Router",
+    "architecture": "フルスタックSPA（BaaS連携）",
+    "scale": "中規模",
+    "file_count": 33,
+    "description": "宇宙テーマの学習記録アプリ。Supabase認証（GitHub OAuth/メールパスワード）・PostgreSQLでの学習ログCRUD・分析ダッシュボード（recharts）・GitHub Issue連携・ダーク/ライトテーマ切替を搭載するフルスタックアプリケーション。",
+    "design_keys": [
+      "Supabase BaaS統合（認証・RLS・REST API・Edge Functions）によるサーバーレスアーキテクチャ",
+      "ローカルストレージとリモートDBのハイブリッドデータ管理（フォールバック・マイグレーション対応）",
+      "型安全な設計（TypeScript型定義とDBスキーマの対応）"
+    ],
+    "bud_bottlenecks": 2,
+    "bud_unnecessary": 2,
+    "bud_duplicated": 2,
+    "learnings": [
+      "Supabase認証フロー（OAuth PKCE・セッション管理・onAuthStateChange）",
+      "Row Level Security（RLSポリシー設計によるマルチテナントデータ保護）",
+      "ハイブリッドストレージパターン（localStorage↔Supabaseの同期・フォールバック設計）"
+    ],
+    "security_concerns": [
+      "Supabase URLとAnon Keyが環境変数経由でクライアントに露出（RLSで保護されているが、Anon Keyは公開前提の設計）",
+      "GitHub OAuthトークンをprofilesテーブルに保存（github_access_tokenカラム）— トークン漏洩リスク",
+      "console.logにセッション情報・トークン有無を出力（本番環境では削除すべき）"
+    ],
+    "complexity_score": 4
+  },
+  {
+    "repo": "Rio-cyber-gif/color-palette-app",
+    "title": "Color Extractor",
+    "author": "Rio-cyber-gif",
+    "languages": ["HTML", "JavaScript", "CSS"],
+    "framework": "なし（Vanilla JS + Tailwind CSS CDN）",
+    "architecture": "シングルファイル手続き型",
+    "scale": "小規模",
+    "file_count": 4,
+    "description": "画像から主要5色を抽出するカラーパレット生成ツール。Canvas APIでピクセルデータを解析し、色の頻度分析でパレットを生成する。ドラッグ&ドロップ対応・パレット図鑑（localStorage保存）・サムネイル最適化機能を搭載。",
+    "design_keys": [
+      "Canvas APIによるピクセル単位の色解析（getImageData + 量子化による色グルーピング）",
+      "localStorage活用によるオフライン図鑑機能（サムネイル圧縮でストレージ効率化）",
+      "全処理をブラウザ内で完結させるプライバシー重視設計"
+    ],
+    "bud_bottlenecks": 2,
+    "bud_unnecessary": 1,
+    "bud_duplicated": 1,
+    "learnings": [
+      "Canvas API（getImageData/drawImageによる画像処理）",
+      "色の量子化アルゴリズム（ピクセルデータからの代表色抽出）",
+      "ドラッグ&ドロップAPI（ファイル入力のUX改善）"
+    ],
+    "security_concerns": [
+      "innerHTMLを使用したDOM操作（ユーザーデータのエスケープ処理が不完全 — localStorageから読み込んだdateやhex値が直接HTMLに挿入される）",
+      "localStorage容量制限の対策が不十分（try-catchでalertのみ）"
+    ],
+    "complexity_score": 2
+  },
+  {
+    "repo": "hisaju/silaute",
+    "title": "素人 Code",
+    "author": "hisaju",
+    "languages": ["Go", "Dockerfile"],
+    "framework": "Bubble Tea (Charm)",
+    "architecture": "MVU（Model-View-Update）パターン",
+    "scale": "小規模",
+    "file_count": 15,
+    "description": "Claude Codeのパロディとして作られたターミナルAIアシスタント。ユーザーの質問に対して「分かりません」系のランダムな回答をストリーミング風に表示する。Bubble TeaフレームワークによるリッチなターミナルUIを実装。",
+    "design_keys": [
+      "MVUアーキテクチャ（Model/View/Updateの明確な分離 — Elm Architecture）",
+      "状態マシン設計（stateInput→stateThinking→stateTypingの3状態遷移）",
+      "ティックベースアニメーション（40msタイマーによるスピナー・タイピングアニメーション制御）"
+    ],
+    "bud_bottlenecks": 0,
+    "bud_unnecessary": 0,
+    "bud_duplicated": 0,
+    "learnings": [
+      "Elm Architecture / MVUパターン（GoでのModel-View-Update実装）",
+      "Bubble Tea フレームワーク（ターミナルUI構築の基本パターン）",
+      "状態マシン設計（iota定数による状態列挙と遷移制御）"
+    ],
+    "security_concerns": [],
+    "complexity_score": 2
+  }
+]

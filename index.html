@@ -1,322 +1,511 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Code Analysis - コード分析ツール</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <header>
-    <h1>Code Analysis</h1>
-    <p class="subtitle">GitHubリポジトリを分析して、学びを見つける</p>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code Analysis - コード分析ツール</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Code Analysis</h1>
+      <p class="subtitle">GitHubリポジトリを分析して、学びを見つける</p>
+    </header>
 
-  <main>
-    <!-- Step 0: GitHub URL Input -->
-    <div id="step-0" class="step-content">
-      <div class="step-header">
-        <span class="step-number">START</span>
-        <h2>GitHubリポジトリを入力</h2>
-      </div>
-      <div class="card">
-        <label for="github-url">GitHub リポジトリ URL</label>
-        <div class="input-row">
-          <input type="text" id="github-url" placeholder="https://github.com/owner/repo" />
-          <button id="btn-fetch" class="btn btn-primary">取得</button>
+    <main>
+      <!-- Step 0: GitHub URL Input -->
+      <div id="step-0" class="step-content">
+        <div class="step-header">
+          <span class="step-number">START</span>
+          <h2>GitHubリポジトリを入力</h2>
         </div>
-        <p class="input-hint">公開リポジトリのURLを入力してください</p>
-      </div>
-
-      <div class="card card-load">
-        <h3>過去の分析を読み込む</h3>
-        <p class="input-hint">以前ダウンロードした分析ファイル（.json）をアップロードして復元できます</p>
-        <div class="input-row">
-          <button id="btn-load" class="btn btn-secondary" onclick="document.getElementById('file-load').click()">ファイルを選択して読み込む</button>
-          <input type="file" id="file-load" accept=".json" class="hidden" />
-        </div>
-      </div>
-
-      <!-- Loading -->
-      <div id="fetch-loading" class="hidden">
-        <div class="spinner"></div>
-        <p>リポジトリ情報を取得中...</p>
-      </div>
-
-      <!-- Repo info display -->
-      <div id="repo-info" class="hidden">
         <div class="card">
-          <h3>取得したリポジトリ情報</h3>
-          <div class="info-grid" id="repo-info-grid"></div>
-          <details>
-            <summary class="tree-summary">ファイル構成を見る</summary>
-            <pre id="repo-tree" class="tree-pre"></pre>
-          </details>
+          <label for="github-url">GitHub リポジトリ URL</label>
+          <div class="input-row">
+            <input
+              type="text"
+              id="github-url"
+              placeholder="https://github.com/owner/repo"
+            />
+            <button id="btn-fetch" class="btn btn-primary">取得</button>
+          </div>
+          <p class="input-hint">公開リポジトリのURLを入力してください</p>
         </div>
 
-        <div class="card">
-          <h3>主要ファイルの内容</h3>
-          <p class="input-hint">分析対象として選ばれたファイル（自動選定）</p>
-          <div id="key-files-list"></div>
-        </div>
-
-        <button id="btn-generate-prompt" class="btn btn-primary btn-full">
-          STEP 1 のプロンプトを生成する
-        </button>
-      </div>
-    </div>
-
-    <!-- Progress Bar -->
-    <div id="progress-section" class="hidden">
-      <div class="progress-bar">
-        <div class="progress-fill" id="progress-fill"></div>
-      </div>
-      <div class="progress-steps">
-        <div class="progress-step" data-step="1">
-          <div class="step-dot"></div>
-          <span>全体俯瞰</span>
-        </div>
-        <div class="progress-step" data-step="2">
-          <div class="step-dot"></div>
-          <span>設計の鍵</span>
-        </div>
-        <div class="progress-step" data-step="3">
-          <div class="step-dot"></div>
-          <span>改善ポイント</span>
-        </div>
-        <div class="progress-step" data-step="4">
-          <div class="step-dot"></div>
-          <span>学び3選</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 1: Overview - Prompt & Paste -->
-    <div id="step-1" class="step-content hidden">
-      <div class="step-header">
-        <span class="step-number">STEP 1</span>
-        <h2>全体俯瞰</h2>
-      </div>
-
-      <!-- Prompt/Paste mode -->
-      <div id="step-1-input" class="prompt-paste-section">
-        <div class="card">
-          <h3>1. このプロンプトをコピー</h3>
-          <p class="input-hint">Claude / ChatGPT / Gemini のどれかに貼り付けてください</p>
-          <div class="prompt-box">
-            <pre id="prompt-1" class="prompt-text"></pre>
-            <button class="btn-copy" data-target="prompt-1">コピー</button>
+        <div class="card card-load">
+          <h3>過去の分析を読み込む</h3>
+          <p class="input-hint">
+            以前ダウンロードした分析ファイル（.json）をアップロードして復元できます
+          </p>
+          <div class="input-row">
+            <button
+              id="btn-load"
+              class="btn btn-secondary"
+              onclick="document.getElementById('file-load').click()"
+            >
+              ファイルを選択して読み込む
+            </button>
+            <input type="file" id="file-load" accept=".json" class="hidden" />
           </div>
         </div>
-        <div class="card">
-          <h3>2. AIの回答を貼り付け</h3>
-          <p class="input-hint">AIから返ってきたJSON（{...}で始まる部分）を貼り付けてください</p>
-          <textarea id="response-1" class="response-textarea" placeholder='AIの回答をここに貼り付け...'></textarea>
-          <button id="btn-parse-1" class="btn btn-primary btn-full">回答を解析して表示</button>
+
+        <!-- Loading -->
+        <div id="fetch-loading" class="hidden">
+          <div class="spinner"></div>
+          <p>リポジトリ情報を取得中...</p>
+        </div>
+
+        <!-- Repo info display -->
+        <div id="repo-info" class="hidden">
+          <div class="card">
+            <h3>取得したリポジトリ情報</h3>
+            <div class="info-grid" id="repo-info-grid"></div>
+            <details>
+              <summary class="tree-summary">ファイル構成を見る</summary>
+              <pre id="repo-tree" class="tree-pre"></pre>
+            </details>
+          </div>
+
+          <div class="card">
+            <h3>主要ファイルの内容</h3>
+            <p class="input-hint">分析対象として選ばれたファイル（自動選定）</p>
+            <div id="key-files-list"></div>
+          </div>
+
+          <button id="btn-generate-prompt" class="btn btn-primary btn-full">
+            STEP 1 のプロンプトを生成する
+          </button>
         </div>
       </div>
 
-      <!-- Result display -->
-      <div id="step-1-result" class="hidden">
-        <div class="card" id="overview-info"></div>
-        <div class="card">
-          <h3>ディレクトリ構成</h3>
-          <pre id="tree-content" class="tree-pre"></pre>
+      <!-- Progress Bar -->
+      <div id="progress-section" class="hidden">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
         </div>
-        <div class="card">
-          <h3>まずここを見ろガイド</h3>
-          <ol id="reading-guide-list"></ol>
+        <div class="progress-steps">
+          <div class="progress-step" data-step="1">
+            <div class="step-dot"></div>
+            <span>全体俯瞰</span>
+          </div>
+          <div class="progress-step" data-step="2">
+            <div class="step-dot"></div>
+            <span>設計の鍵</span>
+          </div>
+          <div class="progress-step" data-step="3">
+            <div class="step-dot"></div>
+            <span>改善ポイント</span>
+          </div>
+          <div class="progress-step" data-step="4">
+            <div class="step-dot"></div>
+            <span>学び3選</span>
+          </div>
+          <div class="progress-step" data-step="6">
+            <div class="step-dot"></div>
+            <span>逆算</span>
+          </div>
+          <div class="progress-step" data-step="7">
+            <div class="step-dot"></div>
+            <span>Vibe Coding</span>
+          </div>
         </div>
+      </div>
+
+      <!-- Step 1: Overview - Prompt & Paste -->
+      <div id="step-1" class="step-content hidden">
+        <div class="step-header">
+          <span class="step-number">STEP 1</span>
+          <h2>全体俯瞰</h2>
+        </div>
+
+        <!-- Prompt/Paste mode -->
+        <div id="step-1-input" class="prompt-paste-section">
+          <div class="card">
+            <h3>1. このプロンプトをコピー</h3>
+            <p class="input-hint">
+              Claude / ChatGPT / Gemini のどれかに貼り付けてください
+            </p>
+            <div class="prompt-box">
+              <pre id="prompt-1" class="prompt-text"></pre>
+              <button class="btn-copy" data-target="prompt-1">コピー</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3>2. AIの回答を貼り付け</h3>
+            <p class="input-hint">
+              AIから返ってきたJSON（{...}で始まる部分）を貼り付けてください
+            </p>
+            <textarea
+              id="response-1"
+              class="response-textarea"
+              placeholder="AIの回答をここに貼り付け..."
+            ></textarea>
+            <button id="btn-parse-1" class="btn btn-primary btn-full">
+              回答を解析して表示
+            </button>
+          </div>
+        </div>
+
+        <!-- Result display -->
+        <div id="step-1-result" class="hidden">
+          <div class="card" id="overview-info"></div>
+          <div class="card">
+            <h3>ディレクトリ構成</h3>
+            <pre id="tree-content" class="tree-pre"></pre>
+          </div>
+          <div class="card">
+            <h3>まずここを見ろガイド</h3>
+            <ol id="reading-guide-list"></ol>
+          </div>
+          <div class="step-nav">
+            <button class="btn btn-secondary" onclick="showStep(0)">
+              ← リポジトリ選択に戻る
+            </button>
+            <button class="btn btn-primary" onclick="generateAndShowStep(2)">
+              次へ: 設計の鍵 →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Design Keys -->
+      <div id="step-2" class="step-content hidden">
+        <div class="step-header">
+          <span class="step-number">STEP 2</span>
+          <h2>設計の鍵</h2>
+        </div>
+
+        <div id="step-2-input" class="prompt-paste-section">
+          <div class="card">
+            <h3>1. このプロンプトをコピー</h3>
+            <p class="input-hint">
+              Claude / ChatGPT / Gemini のどれかに貼り付けてください
+            </p>
+            <div class="prompt-box">
+              <pre id="prompt-2" class="prompt-text"></pre>
+              <button class="btn-copy" data-target="prompt-2">コピー</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3>2. AIの回答を貼り付け</h3>
+            <textarea
+              id="response-2"
+              class="response-textarea"
+              placeholder="AIの回答をここに貼り付け..."
+            ></textarea>
+            <button id="btn-parse-2" class="btn btn-primary btn-full">
+              回答を解析して表示
+            </button>
+          </div>
+        </div>
+
+        <div id="step-2-result" class="hidden">
+          <div id="design-keys-container"></div>
+          <div class="step-nav">
+            <button class="btn btn-secondary" onclick="showStep(1)">
+              ← 戻る
+            </button>
+            <button class="btn btn-primary" onclick="generateAndShowStep(3)">
+              次へ: 改善ポイント →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Improvements -->
+      <div id="step-3" class="step-content hidden">
+        <div class="step-header">
+          <span class="step-number">STEP 3</span>
+          <h2>改善ポイント（BUD分析）</h2>
+        </div>
+
+        <div id="step-3-input" class="prompt-paste-section">
+          <div class="card">
+            <h3>1. このプロンプトをコピー</h3>
+            <p class="input-hint">
+              Claude / ChatGPT / Gemini のどれかに貼り付けてください
+            </p>
+            <div class="prompt-box">
+              <pre id="prompt-3" class="prompt-text"></pre>
+              <button class="btn-copy" data-target="prompt-3">コピー</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3>2. AIの回答を貼り付け</h3>
+            <textarea
+              id="response-3"
+              class="response-textarea"
+              placeholder="AIの回答をここに貼り付け..."
+            ></textarea>
+            <button id="btn-parse-3" class="btn btn-primary btn-full">
+              回答を解析して表示
+            </button>
+          </div>
+        </div>
+
+        <div id="step-3-result" class="hidden">
+          <div id="bud-container"></div>
+          <div class="card" id="concepts-container">
+            <h3>関連する設計概念</h3>
+            <div id="concepts-list"></div>
+          </div>
+          <div class="step-nav">
+            <button class="btn btn-secondary" onclick="showStep(2)">
+              ← 戻る
+            </button>
+            <button class="btn btn-primary" onclick="generateAndShowStep(4)">
+              次へ: 学び3選 →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: Learnings -->
+      <div id="step-4" class="step-content hidden">
+        <div class="step-header">
+          <span class="step-number">STEP 4</span>
+          <h2>今回の学び 3選</h2>
+        </div>
+
+        <div id="step-4-input" class="prompt-paste-section">
+          <div class="card">
+            <h3>1. このプロンプトをコピー</h3>
+            <p class="input-hint">
+              Claude / ChatGPT / Gemini のどれかに貼り付けてください
+            </p>
+            <div class="prompt-box">
+              <pre id="prompt-4" class="prompt-text"></pre>
+              <button class="btn-copy" data-target="prompt-4">コピー</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3>2. AIの回答を貼り付け</h3>
+            <textarea
+              id="response-4"
+              class="response-textarea"
+              placeholder="AIの回答をここに貼り付け..."
+            ></textarea>
+            <button id="btn-parse-4" class="btn btn-primary btn-full">
+              回答を解析して表示
+            </button>
+          </div>
+        </div>
+
+        <div id="step-4-result" class="hidden">
+          <div id="learnings-container"></div>
+          <div class="card" id="summary-card"></div>
+
+          <!-- Image generation section -->
+          <div class="card" id="image-section">
+            <h3>学び3選 まとめ図解を作成</h3>
+            <p class="input-hint">
+              3つの学びを1枚の技術ポスターにまとめます。プロンプトをコピーして画像生成AIに貼り付け、生成された画像をここにドロップするとPDF/Notionエクスポートに含まれます。
+            </p>
+
+            <div id="image-cards"></div>
+          </div>
+
+          <div class="step-nav">
+            <button class="btn btn-secondary" onclick="showStep(3)">
+              ← 戻る
+            </button>
+            <button class="btn btn-primary" onclick="generateAndShowStep(6)">
+              次へ: 逆算計画 →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 6: Reverse Engineering - Live Coding Plan -->
+      <div id="step-6" class="step-content hidden">
+        <div class="step-header">
+          <span class="step-number">STEP 6</span>
+          <h2>逆算ライブコーディング計画</h2>
+          <p class="step-subtitle">このアプリを自分で作れるようになるには？</p>
+        </div>
+
+        <div id="step-6-input" class="prompt-paste-section">
+          <div class="card">
+            <h3>1. このプロンプトをコピー</h3>
+            <p class="input-hint">
+              Claude / ChatGPT / Gemini のどれかに貼り付けてください
+            </p>
+            <div class="prompt-box">
+              <pre id="prompt-6" class="prompt-text"></pre>
+              <button class="btn-copy" data-target="prompt-6">コピー</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3>2. AIの回答を貼り付け</h3>
+            <textarea
+              id="response-6"
+              class="response-textarea"
+              placeholder="AIの回答をここに貼り付け..."
+            ></textarea>
+            <button id="btn-parse-6" class="btn btn-primary btn-full">
+              回答を解析して表示
+            </button>
+          </div>
+        </div>
+
+        <div id="step-6-result" class="hidden">
+          <div class="card" id="reverse-plan-header"></div>
+          <div id="reverse-sessions-container"></div>
+          <div class="card" id="reverse-extensions"></div>
+          <div class="card" id="reverse-summary"></div>
+          <div class="step-nav">
+            <button class="btn btn-secondary" onclick="showStep(4)">
+              ← 学び3選に戻る
+            </button>
+            <button class="btn btn-primary" onclick="generateAndShowStep(7)">
+              次へ: Vibe Coding指示書 →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 7: Vibe Coding Playbook -->
+      <div id="step-7" class="step-content hidden">
+        <div class="step-header">
+          <span class="step-number">STEP 7</span>
+          <h2>Vibe Coding 指示書</h2>
+          <p class="step-subtitle">
+            AIに何をどう頼めば、このアプリが作れるか？
+          </p>
+        </div>
+
+        <div id="step-7-input" class="prompt-paste-section">
+          <div class="card">
+            <h3>1. このプロンプトをコピー</h3>
+            <p class="input-hint">
+              Claude / ChatGPT / Gemini のどれかに貼り付けてください
+            </p>
+            <div class="prompt-box">
+              <pre id="prompt-7" class="prompt-text"></pre>
+              <button class="btn-copy" data-target="prompt-7">コピー</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3>2. AIの回答を貼り付け</h3>
+            <textarea
+              id="response-7"
+              class="response-textarea"
+              placeholder="AIの回答をここに貼り付け..."
+            ></textarea>
+            <button id="btn-parse-7" class="btn btn-primary btn-full">
+              回答を解析して表示
+            </button>
+          </div>
+        </div>
+
+        <div id="step-7-result" class="hidden">
+          <div class="card" id="vibe-header"></div>
+          <div id="vibe-steps-container"></div>
+          <div class="card" id="vibe-tips"></div>
+          <div class="card" id="vibe-summary"></div>
+          <div class="step-nav">
+            <button class="btn btn-secondary" onclick="showStep(6)">
+              ← 逆算計画に戻る
+            </button>
+            <button class="btn btn-primary" onclick="showStep(5)">
+              コード全体を見る →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5: Full Code View -->
+      <div id="step-5" class="step-content hidden">
+        <div class="step-header">
+          <span class="step-number">CODE MAP</span>
+          <h2>コード全体俯瞰</h2>
+        </div>
+
+        <!-- Stats bar -->
+        <div class="card code-stats-bar">
+          <div class="info-grid">
+            <div class="info-item">
+              <div class="info-label">総ファイル数</div>
+              <div class="info-value" id="code-total-files">-</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">総行数</div>
+              <div class="info-value" id="code-total-lines">-</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">総文字数</div>
+              <div class="info-value" id="code-total-chars">-</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code files grid -->
+        <div id="code-files-grid" class="code-files-grid"></div>
+
         <div class="step-nav">
-          <button class="btn btn-secondary" onclick="showStep(0)">← リポジトリ選択に戻る</button>
-          <button class="btn btn-primary" onclick="generateAndShowStep(2)">次へ: 設計の鍵 →</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 2: Design Keys -->
-    <div id="step-2" class="step-content hidden">
-      <div class="step-header">
-        <span class="step-number">STEP 2</span>
-        <h2>設計の鍵</h2>
-      </div>
-
-      <div id="step-2-input" class="prompt-paste-section">
-        <div class="card">
-          <h3>1. このプロンプトをコピー</h3>
-          <p class="input-hint">Claude / ChatGPT / Gemini のどれかに貼り付けてください</p>
-          <div class="prompt-box">
-            <pre id="prompt-2" class="prompt-text"></pre>
-            <button class="btn-copy" data-target="prompt-2">コピー</button>
-          </div>
-        </div>
-        <div class="card">
-          <h3>2. AIの回答を貼り付け</h3>
-          <textarea id="response-2" class="response-textarea" placeholder='AIの回答をここに貼り付け...'></textarea>
-          <button id="btn-parse-2" class="btn btn-primary btn-full">回答を解析して表示</button>
-        </div>
-      </div>
-
-      <div id="step-2-result" class="hidden">
-        <div id="design-keys-container"></div>
-        <div class="step-nav">
-          <button class="btn btn-secondary" onclick="showStep(1)">← 戻る</button>
-          <button class="btn btn-primary" onclick="generateAndShowStep(3)">次へ: 改善ポイント →</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 3: Improvements -->
-    <div id="step-3" class="step-content hidden">
-      <div class="step-header">
-        <span class="step-number">STEP 3</span>
-        <h2>改善ポイント（BUD分析）</h2>
-      </div>
-
-      <div id="step-3-input" class="prompt-paste-section">
-        <div class="card">
-          <h3>1. このプロンプトをコピー</h3>
-          <p class="input-hint">Claude / ChatGPT / Gemini のどれかに貼り付けてください</p>
-          <div class="prompt-box">
-            <pre id="prompt-3" class="prompt-text"></pre>
-            <button class="btn-copy" data-target="prompt-3">コピー</button>
-          </div>
-        </div>
-        <div class="card">
-          <h3>2. AIの回答を貼り付け</h3>
-          <textarea id="response-3" class="response-textarea" placeholder='AIの回答をここに貼り付け...'></textarea>
-          <button id="btn-parse-3" class="btn btn-primary btn-full">回答を解析して表示</button>
-        </div>
-      </div>
-
-      <div id="step-3-result" class="hidden">
-        <div id="bud-container"></div>
-        <div class="card" id="concepts-container">
-          <h3>関連する設計概念</h3>
-          <div id="concepts-list"></div>
-        </div>
-        <div class="step-nav">
-          <button class="btn btn-secondary" onclick="showStep(2)">← 戻る</button>
-          <button class="btn btn-primary" onclick="generateAndShowStep(4)">次へ: 学び3選 →</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 4: Learnings -->
-    <div id="step-4" class="step-content hidden">
-      <div class="step-header">
-        <span class="step-number">STEP 4</span>
-        <h2>今回の学び 3選</h2>
-      </div>
-
-      <div id="step-4-input" class="prompt-paste-section">
-        <div class="card">
-          <h3>1. このプロンプトをコピー</h3>
-          <p class="input-hint">Claude / ChatGPT / Gemini のどれかに貼り付けてください</p>
-          <div class="prompt-box">
-            <pre id="prompt-4" class="prompt-text"></pre>
-            <button class="btn-copy" data-target="prompt-4">コピー</button>
-          </div>
-        </div>
-        <div class="card">
-          <h3>2. AIの回答を貼り付け</h3>
-          <textarea id="response-4" class="response-textarea" placeholder='AIの回答をここに貼り付け...'></textarea>
-          <button id="btn-parse-4" class="btn btn-primary btn-full">回答を解析して表示</button>
-        </div>
-      </div>
-
-      <div id="step-4-result" class="hidden">
-        <div id="learnings-container"></div>
-        <div class="card" id="summary-card"></div>
-
-        <!-- Image generation section -->
-        <div class="card" id="image-section">
-          <h3>学び3選 まとめ図解を作成</h3>
-          <p class="input-hint">3つの学びを1枚の技術ポスターにまとめます。プロンプトをコピーして画像生成AIに貼り付け、生成された画像をここにドロップするとPDF/Notionエクスポートに含まれます。</p>
-
-          <div id="image-cards"></div>
+          <button class="btn btn-secondary" onclick="showStep(7)">
+            ← Vibe Coding指示書に戻る
+          </button>
         </div>
 
-        <div class="step-nav">
-          <button class="btn btn-secondary" onclick="showStep(3)">← 戻る</button>
-          <button class="btn btn-primary" onclick="showStep(5)">コード全体を見る →</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 5: Full Code View -->
-    <div id="step-5" class="step-content hidden">
-      <div class="step-header">
-        <span class="step-number">CODE MAP</span>
-        <h2>コード全体俯瞰</h2>
-      </div>
-
-      <!-- Stats bar -->
-      <div class="card code-stats-bar">
-        <div class="info-grid">
-          <div class="info-item">
-            <div class="info-label">総ファイル数</div>
-            <div class="info-value" id="code-total-files">-</div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">総行数</div>
-            <div class="info-value" id="code-total-lines">-</div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">総文字数</div>
-            <div class="info-value" id="code-total-chars">-</div>
+        <!-- Export -->
+        <div class="export-section">
+          <h3>エクスポート</h3>
+          <div class="export-buttons">
+            <button class="btn btn-export" id="btn-save-json">
+              分析データを保存（JSON）
+            </button>
+            <button class="btn btn-export" id="btn-pdf">
+              PDF でダウンロード
+            </button>
+            <button class="btn btn-export" id="btn-notion">
+              Notion に保存（プロンプト生成）
+            </button>
+            <button
+              class="btn btn-export"
+              id="btn-notion-sync"
+              style="background: #000; color: #fff"
+            >
+              Notion DB に自動同期
+            </button>
           </div>
         </div>
       </div>
 
-      <!-- Code files grid -->
-      <div id="code-files-grid" class="code-files-grid"></div>
-
-      <div class="step-nav">
-        <button class="btn btn-secondary" onclick="showStep(4)">← 学び3選に戻る</button>
-      </div>
-
-      <!-- Export -->
-      <div class="export-section">
-        <h3>エクスポート</h3>
-        <div class="export-buttons">
-          <button class="btn btn-export" id="btn-save-json">分析データを保存（JSON）</button>
-          <button class="btn btn-export" id="btn-pdf">PDF でダウンロード</button>
-          <button class="btn btn-export" id="btn-notion">Notion に保存（プロンプト生成）</button>
+      <!-- Code Viewer Modal -->
+      <div id="code-modal" class="code-modal hidden">
+        <div class="code-modal-content">
+          <div class="code-modal-header">
+            <span class="code-modal-filename" id="modal-filename"></span>
+            <span class="code-modal-meta" id="modal-meta"></span>
+            <button class="code-modal-close" onclick="closeCodeModal()">
+              &times;
+            </button>
+          </div>
+          <div class="code-modal-body">
+            <div id="modal-code" class="code-full-view"></div>
+          </div>
+          <!-- Function/keyword tooltips legend -->
+          <div class="code-modal-legend" id="modal-legend"></div>
         </div>
       </div>
-    </div>
 
-    <!-- Code Viewer Modal -->
-    <div id="code-modal" class="code-modal hidden">
-      <div class="code-modal-content">
-        <div class="code-modal-header">
-          <span class="code-modal-filename" id="modal-filename"></span>
-          <span class="code-modal-meta" id="modal-meta"></span>
-          <button class="code-modal-close" onclick="closeCodeModal()">&times;</button>
+      <!-- Error -->
+      <div id="error-section" class="hidden">
+        <div class="card error-card">
+          <h3>エラーが発生しました</h3>
+          <p id="error-message"></p>
+          <button class="btn btn-secondary" onclick="resetApp()">
+            やり直す
+          </button>
         </div>
-        <div class="code-modal-body">
-          <div id="modal-code" class="code-full-view"></div>
-        </div>
-        <!-- Function/keyword tooltips legend -->
-        <div class="code-modal-legend" id="modal-legend"></div>
       </div>
-    </div>
+    </main>
 
-    <!-- Error -->
-    <div id="error-section" class="hidden">
-      <div class="card error-card">
-        <h3>エラーが発生しました</h3>
-        <p id="error-message"></p>
-        <button class="btn btn-secondary" onclick="resetApp()">やり直す</button>
-      </div>
-    </div>
-  </main>
-
-  <script src="js/github.js"></script>
-  <script src="js/prompts.js"></script>
-  <script src="js/image-prompts.js"></script>
-  <script src="js/exporter.js"></script>
-  <script src="js/app.js"></script>
-</body>
+    <script src="js/github.js"></script>
+    <script src="js/prompts.js"></script>
+    <script src="js/image-prompts.js"></script>
+    <script src="js/exporter.js"></script>
+    <script src="js/app.js"></script>
+  </body>
 </html>

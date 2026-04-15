@@ -1,0 +1,205 @@
+[
+  {
+    "repo": "taka-thor/myapp",
+    "title": "声友",
+    "author": "taka-thor",
+    "languages": ["Ruby", "HTML", "JavaScript", "CSS", "Dockerfile", "Shell"],
+    "framework": "Rails 7.2 + ActionCable + WebRTC",
+    "architecture": "MVC + Service Objects + ActionCable Channels",
+    "scale": "中規模",
+    "file_count": 339,
+    "description": "WebRTCとActionCableを活用したリアルタイムグループ音声通話アプリ。ルームに入室してP2P通話ができ、NG単語フィルタリングやミュート機能、トピック変更機能を備えている。",
+    "design_keys": [
+      "WebRTC P2PシグナリングをActionCableで実装（RtcChannel）",
+      "Service Objectsパターン（RoomParticipants::Leave, Rooms::BroadcastFlash等）",
+      "NGワードバリデーションをカスタムバリデータとして実装（音声認識連携あり）"
+    ],
+    "bud_bottlenecks": 2,
+    "bud_unnecessary": 1,
+    "bud_duplicated": 1,
+    "learnings": [
+      "WebRTC + ActionCable によるリアルタイム通信アーキテクチャ",
+      "Service Objectsによるビジネスロジックの分離",
+      "カスタムバリデータの設計とNG単語フィルタリング"
+    ],
+    "security_concerns": [
+      "認証がcookie/session UUIDベースで簡易的（Deviseなどの認証gem未使用）",
+      "WebRTCシグナリング時のユーザー検証が限定的"
+    ],
+    "complexity_score": 4
+  },
+  {
+    "repo": "tenet64/okita_project",
+    "title": "okita!!",
+    "author": "tenet64",
+    "languages": ["Ruby", "HTML", "JavaScript", "CSS", "Dockerfile", "Shell"],
+    "framework": "Rails 7.2 + Devise + Hotwire",
+    "architecture": "MVC + Enum-driven State Machine",
+    "scale": "中規模",
+    "file_count": 345,
+    "description": "早起きチャレンジを作成し、ソロまたは複数人で起床目標を達成するサポートアプリ。ポイントシステムとバッジ機能でゲーミフィケーションを取り入れている。",
+    "design_keys": [
+      "Challengeモデルの状態遷移ロジック（recruiting→ready→success/failed）がモデル内に集約",
+      "UUIDを主キーに採用した全テーブル設計",
+      "バッジ/ポイントシステムによるゲーミフィケーション設計"
+    ],
+    "bud_bottlenecks": 2,
+    "bud_unnecessary": 1,
+    "bud_duplicated": 1,
+    "learnings": [
+      "Enum-driven状態遷移パターンとビジネスロジックのモデル集約",
+      "Devise + OmniAuth(Google) による認証設計",
+      "UUIDベースのDB設計とポリモーフィック関連（point_transactions）"
+    ],
+    "security_concerns": [
+      "ChallengesControllerでauthenticate_user!が重複して呼ばれている",
+      "prevent_destroy_if_closeのチェックが時刻操作で回避可能な可能性"
+    ],
+    "complexity_score": 3
+  },
+  {
+    "repo": "wata-tsugarian/mekuri",
+    "title": "めくり",
+    "author": "wata-tsugarian",
+    "languages": ["TypeScript", "Ruby", "HTML", "CSS", "Dockerfile", "Shell", "JavaScript"],
+    "framework": "Rails 8.1 + React + Inertia.js + Vite",
+    "architecture": "MVC + Inertia.js SPA-like (Server-driven SPA)",
+    "scale": "小規模",
+    "file_count": 295,
+    "description": "日めくりカレンダー型の習慣トラッキングアプリ。カレンダーを作成して毎日「めくる」ことで継続を可視化するReact+Inertia.jsフロントエンドのモダンな構成。",
+    "design_keys": [
+      "Inertia.jsによるサーバードリブンSPAアーキテクチャ（Rails+React統合）",
+      "Propshaft + Vite によるモダンアセットパイプライン",
+      "OmniAuth(Google)によるソーシャルログインのみの認証設計"
+    ],
+    "bud_bottlenecks": 1,
+    "bud_unnecessary": 1,
+    "bud_duplicated": 0,
+    "learnings": [
+      "Rails + Inertia.js + React + TypeScript のフルスタック構成",
+      "Vite を用いたフロントエンドビルドパイプライン",
+      "サーバードリブンSPAのルーティングとprops設計"
+    ],
+    "security_concerns": [
+      "OmniAuthのみで通常メール認証がないため、Google連携が切れるとアクセス不能"
+    ],
+    "complexity_score": 3
+  },
+  {
+    "repo": "naganobol6212/mabatalk",
+    "title": "MabaTalk",
+    "author": "naganobol6212",
+    "languages": ["Ruby", "HTML", "JavaScript", "CSS", "Dockerfile", "Shell"],
+    "framework": "Rails 7.2 + Devise + Hotwire + Anthropic AI",
+    "architecture": "MVC + Service Objects + Wizard Pattern",
+    "scale": "中規模",
+    "file_count": 336,
+    "description": "コミュニケーション支援アプリで、定型メッセージのカテゴリ管理やフローアイテムを使って段階的に会話をサポートする。Anthropic AIによる利用分析サマリー生成機能を搭載。",
+    "design_keys": [
+      "Wizardパターン（DetailFlowsController）による段階的フロー実装",
+      "Anthropic Claude APIを使ったAIサマリー生成（AiSummaryService）",
+      "メッセージカテゴリのテンプレートコピーとドラッグ並べ替え機能"
+    ],
+    "bud_bottlenecks": 1,
+    "bud_unnecessary": 1,
+    "bud_duplicated": 1,
+    "learnings": [
+      "Wizard/ステップフォームパターンのセッション管理設計",
+      "外部AI API（Anthropic）の統合とエラーハンドリング",
+      "カテゴリ/アイテムのreorder機能とposition管理"
+    ],
+    "security_concerns": [
+      "AI APIのレート制限・コスト管理がwith_lockのみで簡易的",
+      "DetailFlowsControllerでセッションにユーザー回答を保存（セッション肥大化リスク）"
+    ],
+    "complexity_score": 3
+  },
+  {
+    "repo": "noriki06/my_graduate_project",
+    "title": "ライフゲージ",
+    "author": "noriki06",
+    "languages": ["Ruby", "HTML", "JavaScript", "CSS", "Dockerfile", "Shell"],
+    "framework": "Rails 7.2 + Devise + Importmap + Tailwind + OpenAI + LINE Bot",
+    "architecture": "MVC + Service Objects + SNS連携",
+    "scale": "中規模",
+    "file_count": 316,
+    "description": "「Die With Zero」の思想に基づき、人生の残り時間を可視化して「やりたいこと」を年齢バケットで管理するライフプランニングアプリ。AI行動提案、LINE通知、ソーシャル共有機能を搭載。",
+    "design_keys": [
+      "時間バケット（time_bucket）による年齢区間ベースのWant管理設計",
+      "OpenAI APIを使ったAI行動提案サービス（AiSuggestionService）",
+      "LINE Bot API + OmniAuth多プロバイダ（Google/Twitter/GitHub/LINE）統合"
+    ],
+    "bud_bottlenecks": 2,
+    "bud_unnecessary": 1,
+    "bud_duplicated": 1,
+    "learnings": [
+      "複数OmniAuthプロバイダの統合設計（identitiesテーブルで管理）",
+      "Active Storageを使った画像管理（Cloudinary連携）",
+      "LINE Webhook + GAS cronによる通知アーキテクチャ"
+    ],
+    "security_concerns": [
+      "管理者フラグがusersテーブルのboolean型（admin列操作リスク）",
+      "デモログイン機能の存在（check_not_demoフィルタの網羅性）",
+      "LINE link tokenの有効期限管理が不明"
+    ],
+    "complexity_score": 4
+  },
+  {
+    "repo": "N10RSto/Icot-Studio",
+    "title": "Icot-Studio",
+    "author": "N10RSto",
+    "languages": ["Ruby", "HTML", "JavaScript", "CSS", "Dockerfile"],
+    "framework": "Rails 7.2 + Importmap + Canvas API",
+    "architecture": "MVC (シンプル)",
+    "scale": "小規模",
+    "file_count": 187,
+    "description": "ブラウザ上のCanvasでドットアイコンを作成・保存できるアプリ。グリッドサイズを選んでピクセル単位で色を塗り、PNG画像として保存・ダウンロードが可能。",
+    "design_keys": [
+      "Canvas APIを使ったクライアントサイドのピクセルエディタ実装",
+      "Base64エンコード画像のActive Storageへの保存（base64_to_file変換）",
+      "bcryptによるシンプルなhas_secure_password認証（Devise不使用）"
+    ],
+    "bud_bottlenecks": 1,
+    "bud_unnecessary": 1,
+    "bud_duplicated": 0,
+    "learnings": [
+      "Canvas API によるインタラクティブなドット絵エディタの実装",
+      "Base64画像データのサーバーサイド処理とActive Storage統合",
+      "activerecord-session_storeによるDBベースセッション管理"
+    ],
+    "security_concerns": [
+      "IconsControllerでrescue => eで全例外をキャッチしエラーメッセージをそのまま返却（情報漏洩リスク）",
+      "Base64入力のサイズ検証が未実装（メモリ攻撃リスク）"
+    ],
+    "complexity_score": 2
+  },
+  {
+    "repo": "mokuza1/tea_review_app",
+    "title": "みんなの紅茶図鑑",
+    "author": "mokuza1",
+    "languages": ["Ruby", "HTML", "JavaScript", "CSS", "Dockerfile", "Shell"],
+    "framework": "Rails 8.1 + Devise + Propshaft + Ransack",
+    "architecture": "MVC + 管理画面 + 承認ワークフロー + 診断サービス",
+    "scale": "中規模",
+    "file_count": 307,
+    "description": "紅茶のデータベースアプリで、ユーザーが商品を登録し管理者が承認する投稿ワークフローを持つ。紅茶診断機能でフレーバーカテゴリをレコメンドし、お気に入り管理もできる。",
+    "design_keys": [
+      "承認ワークフロー（draft→pending→published/rejected）のステータス遷移設計",
+      "TeaDiagnosticServiceによるステップ形式の診断エンジン実装",
+      "Ransack検索 + 管理者名前空間(admin)による権限分離設計"
+    ],
+    "bud_bottlenecks": 1,
+    "bud_unnecessary": 1,
+    "bud_duplicated": 1,
+    "learnings": [
+      "管理者承認ワークフローのステータス遷移パターン（approve!/reject!）",
+      "多対多関連（tea_product_flavors, tea_product_purchase_locations）の設計",
+      "Ransackによる検索機能とDevise+ロールベースの権限管理"
+    ],
+    "security_concerns": [
+      "ロールがusersテーブルのinteger enum（role列の直接操作リスク）",
+      "承認ワークフローでInvalidStatusTransitionがStandardErrorを継承（カスタム例外の扱い）"
+    ],
+    "complexity_score": 3
+  }
+]
